@@ -2,88 +2,171 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Mon Site Minimaliste</title>
+  <title>Ton Nom - Portfolio</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9f9f9;
+      padding: 0;
+      height: 100%;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       color: #333;
-      line-height: 1.6;
+      overflow: hidden;
     }
-    header {
-      background: #fff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 1em 0;
-      position: sticky;
+
+    canvas {
+      position: fixed;
       top: 0;
-      z-index: 100;
+      left: 0;
+      z-index: -1;
     }
-    nav {
-      max-width: 800px;
-      margin: auto;
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
       display: flex;
-      justify-content: center;
-      gap: 2em;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1em 2em;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+
+    header .name {
+      font-weight: 600;
+      font-size: 1.2em;
+    }
+
     nav a {
+      margin-left: 1.5em;
       text-decoration: none;
       color: #333;
       font-weight: 500;
       transition: color 0.3s;
     }
+
     nav a:hover {
       color: #007acc;
     }
+
     main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 2em;
+      text-align: center;
+    }
+
+    main p {
       max-width: 800px;
-      margin: 2em auto;
-      padding: 0 1em;
+      font-size: 1.2em;
+      line-height: 1.6;
+      background: rgba(255,255,255,0.85);
+      padding: 2em;
+      border-radius: 8px;
     }
-    section {
-      margin-bottom: 3em;
-    }
-    h1, h2 {
-      text-align: center;
-      color: #222;
-    }
+
     footer {
+      position: fixed;
+      bottom: 1em;
+      width: 100%;
       text-align: center;
-      font-size: 0.9em;
-      color: #777;
-      padding: 2em 0;
-      border-top: 1px solid #eee;
+    }
+
+    .social-icons {
+      display: inline-flex;
+      gap: 1em;
+    }
+
+    .social-icons a {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: #333;
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+      line-height: 40px;
+      font-size: 1.2em;
+      transition: background 0.3s;
+    }
+
+    .social-icons a:hover {
+      background: #007acc;
     }
   </style>
 </head>
 <body>
+  <canvas id="bg"></canvas>
+
   <header>
+    <div class="name">Ton Prénom Nom</div>
     <nav>
       <a href="#accueil">Accueil</a>
-      <a href="#apropos">À propos</a>
-      <a href="#contact">Contact</a>
+      <a href="#projets">Projets</a>
+      <a href="#communications">Communications</a>
+      <a href="#education">Éducation</a>
+      <a href="#other">Other activities</a>
     </nav>
   </header>
 
   <main>
-    <section id="accueil">
-      <h1>Bienvenue sur mon site</h1>
-      <p>Ceci est un exemple de site minimaliste avec plusieurs onglets de navigation. Tu peux personnaliser le contenu comme tu le souhaites.</p>
-    </section>
-
-    <section id="apropos">
-      <h2>À propos</h2>
-      <p>Je suis passionné par le développement web et la création de projets simples et élégants. Ce site a été conçu avec HTML et CSS uniquement.</p>
-    </section>
-
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Tu peux me contacter par email à <a href="mailto:exemple@email.com">exemple@email.com</a>.</p>
-    </section>
+    <p>
+      Bienvenue sur mon portfolio.<br>
+      Voici un exemple de long texte qui présente mon parcours, mes projets et mes activités. Vous pouvez personnaliser cette section avec vos informations, vos valeurs ou votre histoire professionnelle.
+    </p>
   </main>
 
   <footer>
-    &copy; 2025 Mon Site Minimaliste. Tous droits réservés.
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/tonprofil" target="_blank" title="LinkedIn">in</a>
+      <a href="mailto:ton.email@example.com" title="Email">&#9993;</a>
+    </div>
   </footer>
+
+  <script>
+    // Animation minimaliste de cercles qui flottent
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    let circles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Créer des cercles aléatoires
+    for (let i = 0; i < 50; i++) {
+      circles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 3 + 1,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let c of circles) {
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0,0,0,0.1)';
+        ctx.fill();
+        c.x += c.dx;
+        c.y += c.dy;
+
+        if (c.x < 0) c.x = canvas.width;
+        if (c.x > canvas.width) c.x = 0;
+        if (c.y < 0) c.y = canvas.height;
+        if (c.y > canvas.height) c.y = 0;
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>
